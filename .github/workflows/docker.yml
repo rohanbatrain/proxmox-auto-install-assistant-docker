@@ -36,7 +36,7 @@ jobs:
       - name: Publish to Github Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
         with:
-          name: rohanbatrain/proxmox-auto-install-assistant-docker/core
+          name: rohanbatrain/proxmox-auto-install-assistant-docker
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
