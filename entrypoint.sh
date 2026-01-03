@@ -10,7 +10,10 @@ fi
 INPUT_ISO="$1"
 PROFILE_NAME="$2"
 ANSWER_FILE="/answers/${PROFILE_NAME}/answer.toml"
-OUTPUT_ISO="/out/proxmox-ve_8.4-auto-${PROFILE_NAME}.iso"
+
+# Extract base name from input ISO and generate output name dynamically
+ISO_BASENAME=$(basename "$INPUT_ISO" .iso)
+OUTPUT_ISO="/out/${ISO_BASENAME}-auto-${PROFILE_NAME}.iso"
 
 if [ ! -f "$ANSWER_FILE" ]; then
   echo "ERROR: Answer file not found at $ANSWER_FILE"
