@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:trixie
 
 # Install required dependencies
 RUN apt-get update && \
@@ -10,8 +10,12 @@ RUN apt-get update && \
         curl \
         xorriso && \
     update-ca-certificates && \
-    echo "deb [trusted=yes arch=amd64] http://download.proxmox.com/debian/pve bookworm pve-no-subscription" \
-        > /etc/apt/sources.list.d/pve-no-subscription.list && \
+    # Proxmox Trixie Release Key
+    install -d /etc/apt/keyrings && \
+    wget https://enterprise.proxmox.com/debian/proxmox-release-trixie.gpg \
+        -O /etc/apt/keyrings/proxmox-release-trixie.gpg && \
+    printf 'Types: deb\nURIs: http://download.proxmox.com/debian/pve\nSuites: trixie\nComponents: pve-no-subscription\nSigned-By: /etc/apt/keyrings/proxmox-release-trixie.gpg\n' \
+        > /etc/apt/sources.list.d/proxmox.sources && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         proxmox-auto-install-assistant && \
